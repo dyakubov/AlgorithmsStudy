@@ -55,4 +55,8 @@ public class Main1 {
         System.out.println(a);
         return a;
     }
+
+    private static boolean isEquals (int a, int b){
+        return a == b;
+    }
 }
