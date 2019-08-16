@@ -35,9 +35,9 @@ public class DequeueImpl <E> extends QueueImpl<E> implements Dequeue<E> {
         if (isEmpty())
             return null;
 
-        if (tail == data.length) {
-            tail = DEFAULT_TAIL;
-        }
+//        if (tail == 0) {
+//            tail = data.length;
+//        }
 
         E value = data[tail--];
         size--;
