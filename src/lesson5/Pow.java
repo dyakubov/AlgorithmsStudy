@@ -1,16 +1,16 @@
 package lesson5;
 
-class Exponentiation {
+class MyPow {
 
-    float getExp(float i, float exp){
+    static float pow(float i, float exp){
         if (exp == 1 || i == 0) {
             return i;
         } else if (exp < 0){
-            return 1 / (i * getExp(i, Math.abs(exp + 1)));
+            return 1 / (i * pow(i, Math.abs(exp + 1)));
         } else if (exp == 0){
             return 1;
         }
 
-        return i * getExp(i, exp - 1f);
+        return i * pow(i, exp - 1f);
     }
 }

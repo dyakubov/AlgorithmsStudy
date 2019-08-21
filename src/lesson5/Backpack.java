@@ -1,28 +1,31 @@
 package lesson5;
 
-import lesson2.array.Array;
-
 import java.util.*;
 
 public class Backpack {
     private int maxWeight;
     private List<Thing> allThings = new ArrayList<>();
-    protected List<Thing> bestSet = new ArrayList<>();
+    List<Thing> bestSet = new ArrayList<>();
     private List<List<Thing>> variations = new ArrayList<>();
+    private double iterations = 0;
 
-
-    public Backpack(int maxWeight, Thing... things) {
+    Backpack(int maxWeight, Thing... things) {
         this.maxWeight = maxWeight;
         this.allThings.addAll(Arrays.asList(things));
     }
 
     private void createVariations(){
+        iterations = Math.pow(allThings.size(), allThings.size());
         createVariations(allThings.size());
     }
 
     private void createVariations(int size){
-        if (size == 0){
+        if (iterations == 0){
             return;
+        }
+
+        if (size == 0){
+            size = allThings.size();
         }
 
         List<Thing> var = new ArrayList<>();
@@ -30,22 +33,24 @@ public class Backpack {
         for (int i = 0; i < size; i++) {
             var.add(allThings.get(i));
         }
-
-        createVariations(size - 1);
         variations.add(var);
+        iterations--;
+        rotate(size);
+        createVariations(size - 1);
+
     }
 
     private void rotate(int length){
         int pos = allThings.size() - length;
         Thing temp = allThings.get(pos);
         for (int i = pos + 1; i < allThings.size(); i++) {
-            allThings.set(pos - 1, allThings.get(pos));
+            allThings.set(i - 1, allThings.get(i));
         }
 
         allThings.set(allThings.size() - 1, temp);
     }
 
-    public int getTotalWeight(List<Thing> things){
+    int getTotalWeight(List<Thing> things){
         int result = 0;
         for (Thing thing : things) {
             result += thing.getWeight();
@@ -54,7 +59,7 @@ public class Backpack {
         return result;
     }
 
-    public int getTotalCost(List<Thing> things){
+    int getTotalCost(List<Thing> things){
         int result = 0;
         for (Thing thing : things) {
             result += thing.getCost();
@@ -73,7 +78,7 @@ public class Backpack {
         }
     }
 
-    public void getBestSet() {
+    void getBestSet() {
         if (allThings.size() == 1){
             bestSet.addAll(allThings);
             return;
