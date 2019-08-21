@@ -68,6 +68,26 @@ public class Backpack {
         return result;
     }
 
+
+
+    void createBestSet() {
+        if (allThings.isEmpty()){
+            return;
+        }
+
+        int maxCost = 0;
+
+        createVariations();
+
+        for (List<Thing> variation : variations) {
+            if (getTotalWeight(variation) <= maxWeight && getTotalCost(variation) >= maxCost) {
+                maxCost = getTotalCost(variation);
+                bestSet.clear();
+                bestSet.addAll(variation);
+            }
+        }
+    }
+
     //For debug only
     public void printVariations(){
         System.out.println(variations.size());
@@ -76,26 +96,6 @@ public class Backpack {
                 System.out.print(t.getName() + " ");
             }
             System.out.println();
-        }
-    }
-
-    void getBestSet() {
-        if (allThings.size() == 1){
-            bestSet.addAll(allThings);
-            return;
-        } else if (allThings.isEmpty()){
-            throw new IllegalArgumentException("Set is empty");
-        }
-        int maxCost = 0;
-
-        createVariations();
-        for (List<Thing> variation : variations) {
-
-            if (getTotalWeight(variation) <= maxWeight && getTotalCost(variation) >= maxCost) {
-                maxCost = getTotalCost(variation);
-                bestSet.clear();
-                bestSet.addAll(variation);
-            }
         }
     }
 }
