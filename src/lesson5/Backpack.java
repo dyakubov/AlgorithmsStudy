@@ -15,7 +15,7 @@ public class Backpack {
     }
 
     private void createVariations(){
-        iterations = Math.pow(allThings.size(), allThings.size());
+        iterations = Math.pow(2, allThings.size());
         createVariations(allThings.size());
     }
 
@@ -68,6 +68,7 @@ public class Backpack {
         return result;
     }
 
+    //For debug only
     public void printVariations(){
         System.out.println(variations.size());
         for (List<Thing> tSet : variations) {
